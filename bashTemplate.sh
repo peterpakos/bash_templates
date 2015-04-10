@@ -17,7 +17,7 @@ cleanup() {
 }
 
 err() {
-  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2
+  echo "[$(date +'%d/%m/%Y %H:%M:%S')]: $@" >&2
   cleanup
   exit 1
 }
