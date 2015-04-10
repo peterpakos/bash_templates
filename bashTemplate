@@ -6,9 +6,9 @@
 
 ### Variables
 
-_VERSION=0.0
+_VERSION="1.0"
 _DIR="$(cd "$(dirname "${0}")" && pwd)"
-_FILE=$(basename "${0}")
+_FILE="$(basename "${0}")"
 
 ### Functions
 
@@ -24,7 +24,6 @@ err() {
 
 ### Runtime
 
-# Exit on error. Append || true if you expect an error.
 set -o errexit
 set -o errtrace
 set -o nounset
@@ -36,5 +35,7 @@ trap 'err "Received signal SIGINT"' SIGINT
 trap 'err "Received signal SIGTERM"' SIGTERM
 
 ### Main code
+
+
 
 exit 0
