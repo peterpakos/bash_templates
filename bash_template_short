@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Script description.
+#
+# Author: First Last <first.last@wandisco.com>
+
+set -euo pipefail
+
+main() {
+  echo "Hello World!"
+}
+
+main "$@"

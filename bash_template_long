@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+#
+# Script description.
+#
+# Author: First Last <first.last@wandisco.com>
+
+set -euo pipefail
+
+readonly APP_VER="1.0"
+readonly APP_NAME=$(basename "$0")
+readonly APP_TMP=$(mktemp -dt "${APP_NAME}.XXXXXXXX")
+
+die() {
+  local code=${1:-0}
+  local msg="${2:-}"
+
+  if [[ -n "$msg" ]]; then
+    printf "%s\n" "$msg" >&2
+  fi
+  exit "$code"
+}
+
+display_version() {
+  printf "%s version %s\n" "$APP_NAME" "$APP_VER"
+}
+
+display_help() {
+  display_version
+  cat <<HELP
+Usage: ${APP_NAME} [OPTIONS]
+AVAILABLE OPTIONS:
+-h  Print this help summary page
+-v  Print version number
+HELP
+}
+
+cleanup() {
+  [[ -d "$APP_TMP" ]] && rm -rf "$APP_TMP"
+}
+
+get_opts() {
+  while getopts ":vh" opt; do
+    case $opt in
+      v)
+        display_version
+        die 0
+        ;;
+      h)
+        display_help
+        die 0
+        ;;
+      :)
+        printf "Option -%s requires an argument.\n\n" "$OPTARG"
+        display_help
+        die 1
+        ;;
+      *)
+        printf "Invalid option: -%s\n\n" "$OPTARG"
+        display_help
+        die 1
+        ;;
+    esac
+  done
+}
+
+main() {
+  trap cleanup EXIT SIGHUP SIGINT SIGTERM
+
+  get_opts "$@"
+
+  echo "Hello World!"
+
+  die 0
+}
+
+main "$@"
