@@ -5,24 +5,20 @@
 # Author: First Last <first.last@wandisco.com>
 
 set -euo pipefail
+IFS=$'\n'
 
 readonly APP_VER="1.0"
-readonly APP_NAME=$(basename "$0")
-readonly APP_TMP=$(mktemp -dt "${APP_NAME}.XXXXXXXX")
+readonly APP_NAME="$(basename "$0")"
+readonly APP_DIR="$(cd "$(dirname "$0")" && pwd)"
+readonly APP_LIB="${APP_DIR}/functions.sh"
+readonly APP_TMP="$(mktemp -dt "${APP_NAME}.XXXXXXXX")"
 
-die() {
-  local code=${1:-0}
-  local msg="${2:-}"
-
-  if [[ -n "$msg" ]]; then
-    printf "%s\n" "$msg" >&2
-  fi
-  exit "$code"
-}
-
-display_version() {
-  printf "%s version %s\n" "$APP_NAME" "$APP_VER"
-}
+if [[ -r "${APP_LIB}" ]]; then
+  . "${APP_LIB}"
+else
+  printf "Unable to load library file %s, exiting.\n" "$(basename "${APP_LIB}")" >&2
+  exit 1
+fi
 
 display_help() {
   display_version
@@ -32,10 +28,6 @@ AVAILABLE OPTIONS:
 -h  Print this help summary page
 -v  Print version number
 HELP
-}
-
-cleanup() {
-  [[ -d "$APP_TMP" ]] && rm -rf "$APP_TMP"
 }
 
 get_opts() {
@@ -67,9 +59,7 @@ main() {
   trap cleanup EXIT SIGHUP SIGINT SIGTERM
 
   get_opts "$@"
-
   echo "Hello World!"
-
   die 0
 }
 
