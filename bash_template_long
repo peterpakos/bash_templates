@@ -16,7 +16,8 @@ readonly APP_TMP="$(mktemp -dt "${APP_NAME}.XXXXXXXX")"
 if [[ -r "${APP_LIB}" ]]; then
   . "${APP_LIB}"
 else
-  printf "Unable to load library file %s, exiting.\n" "$(basename "${APP_LIB}")" >&2
+  printf "Unable to load library file %s, exiting.\n" \
+    "$(basename "${APP_LIB}")" >&2
   exit 1
 fi
 
@@ -42,14 +43,10 @@ get_opts() {
         die 0
         ;;
       :)
-        printf "Option -%s requires an argument.\n\n" "$OPTARG"
-        display_help
-        die 1
+        die 1 "Option -${OPTARG} requires an argument"
         ;;
       *)
-        printf "Invalid option: -%s\n\n" "$OPTARG"
-        display_help
-        die 1
+        die 1 "Invalid option -${OPTARG}"
         ;;
     esac
   done

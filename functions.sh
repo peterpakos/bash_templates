@@ -3,7 +3,7 @@ die() {
   local msg="${2:-}"
 
   if [[ -n "$msg" ]]; then
-    printf "%s\n" "$msg" >&2
+    printf -- "%s\n" "$msg" >&2
   fi
   exit "$code"
 }
