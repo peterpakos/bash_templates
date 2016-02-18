@@ -5,7 +5,6 @@
 # Author: First Last <first.last@wandisco.com>
 
 set -euo pipefail
-IFS=$'\n'
 
 readonly APP_VER="1.0"
 readonly APP_NAME="$(basename "$0")"
@@ -13,13 +12,13 @@ readonly APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 readonly APP_TMP="$(mktemp -dt "${APP_NAME}.XXXXXXXX")"
 
 die() {
-  local code=${1:-0}
-  local msg="${2:-}"
+  local msg="${1:-}"
+  local -i code=${2:-1}
 
   if [[ -n "$msg" ]]; then
-    printf -- "%s\n" "$msg" >&2
+    printf "%s\n" "$msg" >&2
   fi
-  exit "$code"
+  exit $code
 }
 
 display_version() {
@@ -45,17 +44,17 @@ get_opts() {
     case $opt in
       v)
         display_version
-        die 0
+        exit 0
         ;;
       h)
         display_help
-        die 0
+        exit 0
         ;;
       :)
-        die 1 "Option -${OPTARG} requires an argument"
+        die "Option -${OPTARG} requires an argument"
         ;;
       *)
-        die 1 "Invalid option -${OPTARG}"
+        die "Invalid option -${OPTARG}"
         ;;
     esac
   done
@@ -65,8 +64,8 @@ main() {
   trap cleanup EXIT SIGHUP SIGINT SIGTERM
 
   get_opts "$@"
-  echo "Hello World!"
-  die 0
+  printf "Hello World!\n"
+  exit 0
 }
 
 main "$@"
