@@ -1,2 +1,2 @@
-# bashTemplate
-Template for bash scripts providing basic error handling
+# bash_templates
+Templates for Bash scripts
