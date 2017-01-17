@@ -2,7 +2,7 @@
 #
 # Script description.
 #
-# Author: First Last <first.last@wandisco.com>
+# Author: Peter Pakos <peter.pakos@wandisco.com>
 
 set -euo pipefail
 
@@ -18,7 +18,7 @@ die() {
   if [[ -n "$msg" ]]; then
     printf "%s\n" "$msg" >&2
   fi
-  exit $code
+  exia "$code"
 }
 
 display_version() {
