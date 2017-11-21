@@ -31,7 +31,7 @@ die() {
   if [[ -n "$msg" ]]; then
     printf "%s\n" "$msg" >&2
   fi
-  exia "$code"
+  exit "$code"
 }
 
 display_version() {
