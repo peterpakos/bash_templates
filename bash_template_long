@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #
-# Script description.
+# Script description
 #
-# Copyright (C) 2017 Peter Pakos <peter.pakos@wandisco.com>
+# Author: Peter Pakos <peter.pakos@wandisco.com>
+# Copyright (C) 2018 WANdisco
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,23 +20,22 @@
 
 set -euo pipefail
 
-readonly APP_VER="1.0"
 readonly APP_NAME="$(basename "$0")"
+readonly APP_VER="1.0.0"
 readonly APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 readonly APP_TMP="$(mktemp -dt "${APP_NAME}.XXXXXXXX")"
 
 die() {
-  local msg="${1:-}"
-  local -i code=${2:-1}
+  local msg="${1:-}" code=${2:-1}
 
   if [[ -n "$msg" ]]; then
-    printf "%s\n" "$msg" >&2
+    printf "%s\\n" "$msg" >&2
   fi
   exit "$code"
 }
 
 display_version() {
-  printf "%s version %s\n" "$APP_NAME" "$APP_VER"
+  printf "%s version %s\\n" "$APP_NAME" "$APP_VER"
 }
 
 cleanup() {
@@ -47,8 +47,8 @@ display_help() {
   cat <<HELP
 Usage: ${APP_NAME} [OPTIONS]
 AVAILABLE OPTIONS:
--h  Print this help summary page
 -v  Print version number
+-h  Print this help summary page
 HELP
 }
 
@@ -77,7 +77,7 @@ main() {
   trap cleanup EXIT SIGHUP SIGINT SIGTERM
 
   get_opts "$@"
-  printf "Hello World!\n"
+  printf "Hello World!\\n"
   exit 0
 }
 
