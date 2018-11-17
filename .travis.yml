@@ -1,12 +1,9 @@
-sudo: required
-dist: trusty
 language: bash
-
-before_install:
-- sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse"
-- sudo apt-get -qq update
-- sudo apt-get -t trusty-backports install shellcheck
-
-script:
-- shellcheck bash_template_short
-- shellcheck bash_template_long
+sudo: false
+script: shellcheck bash_template_*
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+    recipients:
+    - peter@pakos.uk
