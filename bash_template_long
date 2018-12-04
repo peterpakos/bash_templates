@@ -35,7 +35,7 @@ die() {
 }
 
 display_version() {
-  printf "%s version %s\\n" "$APP_NAME" "$APP_VER"
+  printf "%s %s\\n" "$APP_NAME" "$APP_VER"
 }
 
 cleanup() {
